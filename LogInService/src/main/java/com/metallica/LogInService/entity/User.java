@@ -6,8 +6,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.hibernate.validator.constraints.UniqueElements;
+
 @Entity
-@Table(name="user-info")
+@Table(name="user_info")
 public class User {
 
 	@Id
@@ -15,6 +17,8 @@ public class User {
 	int id;
 	
 	String name;
+	
+	@UniqueElements
 	String username;
 	Status status;
 	public String getName() {
