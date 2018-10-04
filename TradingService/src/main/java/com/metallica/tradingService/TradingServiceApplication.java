@@ -1,4 +1,4 @@
-package com.sapient.TradingService;
+package com.metallica.tradingService;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
