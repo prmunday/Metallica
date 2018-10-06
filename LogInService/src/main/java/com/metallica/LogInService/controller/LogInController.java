@@ -1,16 +1,9 @@
 package com.metallica.LogInService.controller;
 
-import java.io.File;
-import java.io.Reader;
 import java.security.Principal;
-import java.util.LinkedHashMap;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.transaction.TransactionSystemException;
@@ -20,14 +13,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.metallica.LogInService.entity.Status;
 import com.metallica.LogInService.entity.User;
-import com.metallica.LogInService.repo.IUSerRepo;
+import com.metallica.LogInService.repo.IUserRepo;
 
 @RestController
 @RequestMapping(path="/")
 public class LogInController {
 	
 	@Autowired
-	IUSerRepo repo;
+	IUserRepo repo;
 	
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value="/user")
@@ -35,9 +28,7 @@ public class LogInController {
 	    if (principal != null) {
 	        OAuth2Authentication oAuth2Authentication = (OAuth2Authentication) principal;
 	        Authentication authentication = oAuth2Authentication.getUserAuthentication();
-	        Map<String, String> details = new LinkedHashMap<>();
-	        details = (Map<String, String>) authentication.getDetails();
-	        System.out.println("details = " + details);  // id, email, name, link etc.
+			Map<String, String> details = (Map<String, String>) authentication.getDetails();
 	       
 //	        Registering user into db
 	        User user = new User(details.get("name"), details.get("email"),Status.ACTIVE );
@@ -48,7 +39,6 @@ public class LogInController {
         	
 	        try {
 		        repo.save(user);
-		        
 	        }
 	        catch (TransactionSystemException e) {
 				return "Welcome";
