@@ -1,7 +1,6 @@
 package com.metallica.tradingService.controllers;
 
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -41,7 +40,7 @@ public class TradingRESTController {
 	 */
 	@RequestMapping(path="/delete/{id}", method=RequestMethod.DELETE)
 	public void deleteTrade(@PathVariable("id") int id){
-		TradingEntity trade = getTrade(id);
+		TradingEntity trade = tradingRepo.getOne(id);
 		if(trade.getStatus() == TradeStatus.OPEN) {
 			tradingRepo.deleteById(id);
 		}
@@ -58,15 +57,18 @@ public class TradingRESTController {
 		return trades;
 	}
 	
-	/**find one trading entity that matches the id that was inputed.
+	/**edit one trading entity that matches the tradeInfo
+	 * that was inputed.
 	 * 
 	 * @param id
-	 * @return trading entity with trading_id equal to id
+	 * 
 	 */
-	@RequestMapping(path="/find/{id}", method=RequestMethod.GET)
-	public TradingEntity getTrade(@PathVariable("id") int id){
-		TradingEntity trade = tradingRepo.getOne(id);
-		return trade;
+	@RequestMapping(path="/edit", method=RequestMethod.PUT)
+	public void editTrade(@RequestBody TradingEntity tradeInfo){
+		TradingEntity trade = tradingRepo.getOne(tradeInfo.getId());
+		if(trade.getStatus() == TradeStatus.OPEN) {
+			tradingRepo.save(tradeInfo);
+		}
 	}
 	
 	/**search for list of trades that meets the search criteria
