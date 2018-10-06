@@ -1,16 +1,10 @@
 package com.metallica.LogInService.controller;
 
-import java.io.File;
-import java.io.Reader;
 import java.security.Principal;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.transaction.TransactionSystemException;
