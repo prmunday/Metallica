@@ -17,8 +17,11 @@ public class RabbitMQSender {
 	private String queue;
 		
 	
+	/**Sends the trade object to rabbitMQ
+	 * 
+	 * @param trade
+	 */
 	public void send(TradingEntity trade) {
-		System.out.println(queue);
 		rabbitTemplate.convertAndSend(queue, trade);
 		System.out.println("Send msg = " + trade);
 	    

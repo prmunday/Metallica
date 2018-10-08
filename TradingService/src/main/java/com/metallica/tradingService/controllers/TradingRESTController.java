@@ -2,6 +2,8 @@ package com.metallica.tradingService.controllers;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -81,11 +83,17 @@ public class TradingRESTController {
 	 * @param newTrade
 	 */
 	@RequestMapping(path="/search", method=RequestMethod.POST)
-	public List<TradingEntity> searchTrades(@RequestBody SearchInfo search){
+	public ResponseEntity<List<TradingEntity>> searchTrades(
+			@RequestBody SearchInfo search){
+		if(search.validDate()) {
+			List<TradingEntity> trades = tradingRepo.findAll(
+					SearchInfo.searchCriteria(search));
+			return new ResponseEntity<List<TradingEntity>>(trades,
+					HttpStatus.OK);
+		}
 		
-		List<TradingEntity> trades = tradingRepo.findAll(
-				SearchInfo.searchCriteria(search));
-		return trades;
+		return  new ResponseEntity<List<TradingEntity>>(
+				HttpStatus.BAD_REQUEST);
 		
 	}
 	
