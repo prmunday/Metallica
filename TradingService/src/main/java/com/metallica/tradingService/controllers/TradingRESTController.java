@@ -13,6 +13,7 @@ import com.metallica.tradingService.entities.TradingEntity;
 import com.metallica.tradingService.etc.SearchInfo;
 import com.metallica.tradingService.etc.TradeStatus;
 import com.metallica.tradingService.repos.ITradingRepo;
+import com.metallica.tradingService.service.RabbitMQSender;
 
 @RestController
 @RequestMapping("/trade")
@@ -21,6 +22,9 @@ public class TradingRESTController {
 	
 	@Autowired
 	ITradingRepo tradingRepo;
+	
+	@Autowired
+	RabbitMQSender rabbitMQSender;
 	
 	
 	/*******************************METHODS***********************************/
@@ -31,6 +35,7 @@ public class TradingRESTController {
 	@RequestMapping(path="/add", method=RequestMethod.POST)
 	public void addTrade(@RequestBody TradingEntity newTrade){
 		tradingRepo.save(newTrade);
+		rabbitMQSender.send(newTrade);
 	}
 	
 	/**delete the trade order that corresponds to the id inputed if and 
