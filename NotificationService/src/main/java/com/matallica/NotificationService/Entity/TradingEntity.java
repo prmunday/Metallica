@@ -2,27 +2,12 @@ package com.matallica.NotificationService.Entity;
 
 import java.sql.Date;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
 import com.metallica.NotificationService.etc.Side;
 import com.metallica.NotificationService.etc.TradeStatus;
 
-
-
-@Entity
-@Table(name="Trading_Data")
 public class TradingEntity {
 	
-	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	@Column(name="trading_id")
 	private int id;
-	
 	private int quantity; //quantity traded
 	private double price; //price at the which the trade was placed/executed
 	private Date date; //date of trade
