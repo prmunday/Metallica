@@ -21,14 +21,14 @@ import com.metallica.tradingService.service.RabbitMQSender;
 @RequestMapping("/trade")
 @CrossOrigin("*")
 public class TradingRESTController {
-	
+
 	@Autowired
 	ITradingRepo tradingRepo;
-	
+
 	@Autowired
 	RabbitMQSender rabbitMQSender;
-	
-	
+
+
 	/*******************************METHODS***********************************/
 	/**adds new Trading Entity to trading data table.
 	 * 
@@ -39,20 +39,22 @@ public class TradingRESTController {
 		tradingRepo.save(newTrade);
 		rabbitMQSender.send(newTrade);
 	}
-	
+
 	/**delete the trade order that corresponds to the id inputed if and 
 	 * only if the trade status is open.
 	 * 
 	 * @param id
 	 */
 	@RequestMapping(path="/delete/{id}", method=RequestMethod.DELETE)
-	public void deleteTrade(@PathVariable("id") int id){
+	public ResponseEntity<String> deleteTrade(@PathVariable("id") int id){
 		TradingEntity trade = tradingRepo.getOne(id);
 		if(trade.getStatus() == TradeStatus.OPEN) {
 			tradingRepo.deleteById(id);
+			return new ResponseEntity<String>(HttpStatus.OK);
 		}
+		return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
 	}
-	
+
 	/**finds all the entries in the data table "trading_data"
 	 * and returns them as a list.
 	 * 
@@ -63,7 +65,7 @@ public class TradingRESTController {
 		List<TradingEntity> trades = tradingRepo.findAll();
 		return trades;
 	}
-	
+
 	/**edit one trading entity that matches the tradeInfo
 	 * that was inputed.
 	 * 
@@ -71,18 +73,21 @@ public class TradingRESTController {
 	 * 
 	 */
 	@RequestMapping(path="/edit", method=RequestMethod.PUT)
-	public void editTrade(@RequestBody TradingEntity tradeInfo){
+	public ResponseEntity<String> editTrade(@RequestBody TradingEntity tradeInfo){
 		TradingEntity trade = tradingRepo.getOne(tradeInfo.getId());
 		if(trade.getStatus() == TradeStatus.OPEN) {
 			tradingRepo.save(tradeInfo);
+			return new ResponseEntity<String>(HttpStatus.OK);
 		}
+		return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
 	}
-	
+
 	/**search for list of trades that meets the search criteria
 	 * 
 	 * @param newTrade
 	 */
 	@RequestMapping(path="/search", method=RequestMethod.POST)
+<<<<<<< HEAD
 	public ResponseEntity<List<TradingEntity>> searchTrades(
 			@RequestBody SearchInfo search){
 		if(search.validDate()) {
@@ -95,6 +100,16 @@ public class TradingRESTController {
 		return  new ResponseEntity<List<TradingEntity>>(
 				HttpStatus.BAD_REQUEST);
 		
+=======
+	public ResponseEntity<List<TradingEntity>> searchTrades(@RequestBody SearchInfo search){
+		if(search.vaildDate()) {
+			List<TradingEntity> trades = tradingRepo.findAll(
+					SearchInfo.searchCriteria(search));
+			return new ResponseEntity<List<TradingEntity>>(trades, HttpStatus.OK);
+		}
+		return new ResponseEntity<List<TradingEntity>>(HttpStatus.BAD_REQUEST);
+
+>>>>>>> 4b1501c0216562ed5ba847a8278dad0956cca4b6
 	}
-	
+
 }

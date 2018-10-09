@@ -1,6 +1,7 @@
 package com.matallica.NotificationService.Entity;
 
 import java.sql.Date;
+<<<<<<< HEAD
 import com.metallica.NotificationService.etc.Side;
 import com.metallica.NotificationService.etc.TradeStatus;
 
@@ -8,8 +9,15 @@ import com.metallica.NotificationService.etc.TradeStatus;
 public class TradingEntity {
 	
 	
-	private int id;
+=======
+
+import com.metallica.NotificationService.etc.Side;
+import com.metallica.NotificationService.etc.TradeStatus;
+
+public class TradingEntity {
 	
+>>>>>>> 4b1501c0216562ed5ba847a8278dad0956cca4b6
+	private int id;
 	private int quantity; //quantity traded
 	private double price; //price at the which the trade was placed/executed
 	private Date date; //date of trade

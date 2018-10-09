@@ -160,6 +160,16 @@ public class SearchInfo {
 		return true;
 	}
 
+	/**Makes sure that the date range entered is valid.
+	 * 
+	 * @return true if the start date comes before the end date.
+	 */
+	public boolean vaildDate() {
+		if (this.getStartDate().compareTo(this.getEndDate())==1) {
+			return false;
+		}
+		return true;
+	}
 
 	/**takes the parameter search and converts it to specification of search 
 	 * criteria.
