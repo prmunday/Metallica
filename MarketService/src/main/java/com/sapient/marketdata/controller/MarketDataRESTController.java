@@ -11,12 +11,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-
 import com.sapient.marketdata.entity.MarketDataEntity;
 import com.sapient.marketdata.repo.IMarketDataRepo;
 
 @RestController
-@RequestMapping("/marketdata")
 @CrossOrigin("*")
 public class MarketDataRESTController {
 	
