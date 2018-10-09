@@ -19,7 +19,6 @@ import com.metallica.tradingService.repos.ITradingRepo;
 import com.metallica.tradingService.service.RabbitMQSender;
 
 @RestController
-@RequestMapping("/trade")
 @CrossOrigin("*")
 public class TradingRESTController {
 
