@@ -17,7 +17,6 @@ import com.metallica.NewRefService.repos.ICounterPartyRepo;
 import com.metallica.NewRefService.repos.ILocationRepo;
 
 @RestController
-@RequestMapping("/api/refdata")
 @CrossOrigin("*")
 public class RefController {
 	

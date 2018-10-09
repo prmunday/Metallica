@@ -1,4 +1,4 @@
-package com.metallica.NewRefService;
+package com.sapient.marketdata;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -8,9 +8,9 @@ import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 @SpringBootApplication
 @EnableDiscoveryClient
 @EnableEurekaClient
-public class NewRefServiceApplication {
+public class MarketdataApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(NewRefServiceApplication.class, args);
+		SpringApplication.run(MarketdataApplication.class, args);
 	}
 }
