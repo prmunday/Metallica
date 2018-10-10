@@ -1,19 +1,11 @@
 package com.matallica.NotificationService.Entity;
 
 import java.sql.Date;
-<<<<<<< Upstream, based on origin/master
 
-=======
->>>>>>> 7a2e6fe Added Logout functionality, to be integrated into API gateway.
 import com.metallica.NotificationService.etc.Side;
 import com.metallica.NotificationService.etc.TradeStatus;
 
 public class TradingEntity {
-	
-<<<<<<< Upstream, based on origin/master
-
-=======
->>>>>>> 7a2e6fe Added Logout functionality, to be integrated into API gateway.
 	private int id;
 	private int quantity; //quantity traded
 	private double price; //price at the which the trade was placed/executed
