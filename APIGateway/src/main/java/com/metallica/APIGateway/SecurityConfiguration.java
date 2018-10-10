@@ -19,7 +19,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 			.antMatchers("/","/index.html")
 				.permitAll()
 			.anyRequest()
-				.authenticated();	
+				.authenticated();
+		http
+        .logout()
+            .logoutUrl("/logout");
 	}
 
 }
