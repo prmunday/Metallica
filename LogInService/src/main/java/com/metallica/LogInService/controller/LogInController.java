@@ -6,16 +6,18 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
+import org.springframework.stereotype.Controller;
 import org.springframework.transaction.TransactionSystemException;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import com.metallica.LogInService.entity.Status;
 import com.metallica.LogInService.entity.User;
 import com.metallica.LogInService.repo.IUserRepo;
 
-@RestController
+@Controller
 @RequestMapping(path="/")
 public class LogInController {
 	
@@ -41,11 +43,15 @@ public class LogInController {
 		        repo.save(user);
 	        }
 	        catch (TransactionSystemException e) {
-				return "Welcome";
+	        	return "Welcome.html";
 			}
 	        
-	        return "Welcome";
+	        return "Welcome.hmtl";
 	    }
 	    return null;
+	}
+	
+	public String logoutFromAuthServer() {
+		return "https://accounts.google.com/Logout?hl=en&continue=https://mail.google.com/mail&service=mail&timeStmp=1539148156&secTok=.AG5fkS-MAYaCDW1ClojD3Qtm08EuHznySQ";
 	}
 }
