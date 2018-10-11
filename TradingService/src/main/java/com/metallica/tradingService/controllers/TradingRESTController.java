@@ -1,6 +1,8 @@
 package com.metallica.tradingService.controllers;
 
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,6 +29,10 @@ public class TradingRESTController {
 
 	@Autowired
 	RabbitMQSender rabbitMQSender;
+	
+	ExecutorService tradeHandlingThreadPool = Executors.newFixedThreadPool(4);
+	
+	public static int TRADE_STATUS_TEST_DELAY = 10000;
 
 
 	/*******************************METHODS***********************************/
@@ -35,9 +41,23 @@ public class TradingRESTController {
 	 * @param newTrade
 	 */
 	@RequestMapping(path="/add", method=RequestMethod.POST)
-	public void addTrade(@RequestBody TradingEntity newTrade){
-		System.out.println(newTrade);
+	public void addTrade(@RequestBody TradingEntity newTrade) {
+		newTrade.setStatus(TradeStatus.OPEN);
 		tradingRepo.save(newTrade);
+		tradeHandlingThreadPool.execute(new Runnable() {
+
+			@Override
+			public void run() {
+				try {
+					Thread.sleep(TradingRESTController.TRADE_STATUS_TEST_DELAY);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				newTrade.setStatus(TradeStatus.NOMINATED);
+				tradingRepo.save(newTrade);
+			}
+			
+		});
 		rabbitMQSender.send(newTrade);
 	}
 
@@ -49,7 +69,7 @@ public class TradingRESTController {
 	@RequestMapping(path="/delete/{id}", method=RequestMethod.DELETE)
 	public ResponseEntity<String> deleteTrade(@PathVariable("id") int id){
 		TradingEntity trade = tradingRepo.getOne(id);
-		if(trade.getStatus() == TradeStatus.OPEN || trade.getStatus() == null) {
+		if(trade.getStatus() == TradeStatus.OPEN) {
 			tradingRepo.deleteById(id);
 			return new ResponseEntity<String>(HttpStatus.OK);
 		}
