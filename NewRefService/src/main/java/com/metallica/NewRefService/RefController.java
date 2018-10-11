@@ -19,48 +19,50 @@ import com.metallica.NewRefService.repos.ILocationRepo;
 @RestController
 @CrossOrigin("*")
 public class RefController {
-	
+
 	@Autowired
 	ICommodityRepo commodityrepo;
-	
+
 	@Autowired
 	ICounterPartyRepo counterepo;
-	
+
 	@Autowired
 	ILocationRepo locationrepo;
-	
+
 	@RequestMapping(path="/commodities", method=RequestMethod.GET)
 	public List<Commodity> fetchAllCommodities(){
 		List<Commodity> commodities = commodityrepo.findAll();
 		return commodities;
 	}
-	
+
 	@RequestMapping(path="/counterparties", method=RequestMethod.GET)
 	public List<CounterParty> fetchAllCounterParties(){
 		List<CounterParty> counterparties = counterepo.findAll();
 		return counterparties;
 	}
-	
+
 	@RequestMapping(path="/locations", method=RequestMethod.GET)
 	public List<Location> fetchAllLocations(){
 		List<Location> locations = locationrepo.findAll();
 		return locations;
 	}
-	
-	
+
+
 	@RequestMapping(path="/add", method=RequestMethod.POST)
 	public void Add(){
-//		Location loc=new Location("Raipur");
-//		Location loc1=new Location("Bhilai");
-//		Location loc2=new Location("Jamshedpur");
-//		Location loc3=new Location("Dearborn");
-//		Location loc4=new Location("East Chicago");
-//		locationrepo.save(loc);
-//		locationrepo.save(loc1);
-//		locationrepo.save(loc2);
-//		locationrepo.save(loc3);
-//		locationrepo.save(loc4);
-		
+		Location loc=new Location("Raipur");
+		Location loc1=new Location("Bhilai");
+		Location loc2=new Location("Jamshedpur");
+		Location loc3=new Location("Dearborn");
+		Location loc4=new Location("East Chicago");
+		if(locationrepo.findAll().size()==0) {
+			locationrepo.save(loc);
+			locationrepo.save(loc1);
+			locationrepo.save(loc2);
+			locationrepo.save(loc3);
+			locationrepo.save(loc4);
+		}
+
 		List<String> counterIdlist=new ArrayList<String>();
 		counterIdlist.add("BALCO");
 		counterIdlist.add("GMDC");
@@ -77,8 +79,8 @@ public class RefController {
 			CounterParty cp=new CounterParty(counterIdlist.get(i),counterNamelist.get(i));
 			counterepo.save(cp);
 		}
-		
-		
+
+
 		List<String> commodityIdlist=new ArrayList<String>();
 		commodityIdlist.add("Al");
 		commodityIdlist.add("QS");
@@ -97,10 +99,10 @@ public class RefController {
 			Commodity cd=new Commodity(commodityIdlist.get(i),commodityNamelist.get(i));
 			commodityrepo.save(cd);
 		}
-		
-		
-		
-		
+
+
+
+
 	}
 
 }

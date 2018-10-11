@@ -18,6 +18,11 @@ public class Location {
 	public String toString() {
 		return "Location [id=" + id + ", name=" + name + "]";
 	}
+	
+	public Location() {
+		super();
+	}
+
 	public Location( String name) {
 		super();
 	
