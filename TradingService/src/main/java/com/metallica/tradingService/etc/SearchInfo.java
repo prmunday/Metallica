@@ -13,10 +13,7 @@ import org.springframework.data.jpa.domain.Specification;
 
 import com.metallica.tradingService.entities.TradingEntity;
 
-/**
- * @author davkim2
- *
- */
+
 public class SearchInfo {
 
 	private Date startDate; //start of date range of search
@@ -149,6 +146,18 @@ public class SearchInfo {
 		return "SearchInfo [startDate=" + startDate + ", endDate=" + endDate +
 				", comm=" + comm + ", loc=" + loc + ", counterParty=" + 
 				counterParty + ", side=" + side + "]";
+	}
+	
+	
+	/**checks to see if start date is before end date
+	 * 
+	 * @return true if start date comes before end date.
+	 */
+	public boolean validDate() {
+		if(this.getStartDate().compareTo(this.getEndDate()) == 1) {
+			return false;
+		}
+		return true;
 	}
 
 	/**Makes sure that the date range entered is valid.

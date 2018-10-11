@@ -6,7 +6,6 @@ import com.metallica.NotificationService.etc.Side;
 import com.metallica.NotificationService.etc.TradeStatus;
 
 public class TradingEntity {
-	
 	private int id;
 	private int quantity; //quantity traded
 	private double price; //price at the which the trade was placed/executed

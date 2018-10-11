@@ -16,6 +16,11 @@ public class RabbitMQConfig {
 	@Value("${queue.name}")
 	String queueName;
 
+	
+	/**creates a queue that is linked to the queue.name in properties file
+	 * 
+	 * @return new queue
+	 */
 	@Bean
 	Queue queue() {
 		return new Queue(queueName, true);
