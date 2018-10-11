@@ -36,6 +36,7 @@ public class TradingRESTController {
 	 */
 	@RequestMapping(path="/add", method=RequestMethod.POST)
 	public void addTrade(@RequestBody TradingEntity newTrade){
+		System.out.println(newTrade);
 		tradingRepo.save(newTrade);
 		rabbitMQSender.send(newTrade);
 	}
@@ -48,7 +49,7 @@ public class TradingRESTController {
 	@RequestMapping(path="/delete/{id}", method=RequestMethod.DELETE)
 	public ResponseEntity<String> deleteTrade(@PathVariable("id") int id){
 		TradingEntity trade = tradingRepo.getOne(id);
-		if(trade.getStatus() == TradeStatus.OPEN) {
+		if(trade.getStatus() == TradeStatus.OPEN || trade.getStatus() == null) {
 			tradingRepo.deleteById(id);
 			return new ResponseEntity<String>(HttpStatus.OK);
 		}
@@ -76,6 +77,7 @@ public class TradingRESTController {
 	public ResponseEntity<String> editTrade(@RequestBody TradingEntity tradeInfo){
 		TradingEntity trade = tradingRepo.getOne(tradeInfo.getId());
 		if(trade.getStatus() == TradeStatus.OPEN) {
+			tradeInfo.setStatus(trade.getStatus());
 			tradingRepo.save(tradeInfo);
 			return new ResponseEntity<String>(HttpStatus.OK);
 		}

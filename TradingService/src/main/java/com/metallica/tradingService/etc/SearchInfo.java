@@ -149,24 +149,16 @@ public class SearchInfo {
 	}
 	
 	
-	/**checks to see if start date is before end date
-	 * 
-	 * @return true if start date comes before end date.
-	 */
-	public boolean validDate() {
-		if(this.getStartDate().compareTo(this.getEndDate()) == 1) {
-			return false;
-		}
-		return true;
-	}
 
 	/**Makes sure that the date range entered is valid.
 	 * 
 	 * @return true if the start date comes before the end date.
 	 */
-	public boolean vaildDate() {
-		if (this.getStartDate().compareTo(this.getEndDate())==1) {
-			return false;
+	public boolean validDate() { 
+		if(this.getStartDate() != null || this.getEndDate() != null) {
+			if (this.getStartDate().compareTo(this.getEndDate())==1) {
+				return false;
+			}
 		}
 		return true;
 	}
