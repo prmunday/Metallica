@@ -22,16 +22,19 @@ public class MarketDataEntity {
 	String identifier;
 	@Column(name = "price")
 	double price;
+	@Column(name="isPositive")
+	boolean isPositive;
 	
 	public MarketDataEntity() {
 		super();
 	}
 
-	public MarketDataEntity(String name, String identifier, double price) {
+	public MarketDataEntity(String name, String identifier, double price, boolean isPositive) {
 		super();
 		this.name = name;
 		this.identifier = identifier;
 		this.price = price;
+		this.isPositive = isPositive;
 	}
 
 	public Integer getId() {
@@ -65,6 +68,15 @@ public class MarketDataEntity {
 	public void setPrice(double price) {
 		this.price = price;
 	}
+	
+	public boolean isPositive() {
+		return isPositive;
+	}
+
+	public void setPositive(boolean isPositive) {
+		this.isPositive = isPositive;
+	}
+
 
 	@Override
 	public String toString() {

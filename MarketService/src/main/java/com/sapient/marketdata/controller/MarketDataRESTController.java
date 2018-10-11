@@ -26,6 +26,11 @@ public class MarketDataRESTController {
 		List<MarketDataEntity> marketData = marketDataRepo.findAll();
 		for(MarketDataEntity m : marketData) {
 			double randomPercent = (int)((Math.random()*((5.00-(-5.00))+1))+(-5.00))*.01;
+			if(randomPercent<0) {
+				m.setPositive(false);
+			}else {
+				m.setPositive(true);
+			}
 			double percentPrice = m.getPrice()*randomPercent;
 			double newPrice = percentPrice+m.getPrice();			
 			BigDecimal bd = new BigDecimal(newPrice);
@@ -41,10 +46,13 @@ public class MarketDataRESTController {
 		List<MarketDataEntity> newMarketData = new ArrayList<MarketDataEntity>();
 		List<MarketDataEntity> marketData = marketDataRepo.findAll();
 		if(marketData.size()==0) {
-			newMarketData.add(new MarketDataEntity("Apple", "APPL", 200));
-			newMarketData.add(new MarketDataEntity("Facebook", "FB", 100));
-			newMarketData.add(new MarketDataEntity("Oracle", "ORCL", 600));
-			newMarketData.add(new MarketDataEntity("Publicis", "PUB", 700));
+			newMarketData.add(new MarketDataEntity("Gold", "GO", 200, true));
+			newMarketData.add(new MarketDataEntity("Silver", "SL", 100, true));
+			newMarketData.add(new MarketDataEntity("Palladium", "PA", 600, true));
+			newMarketData.add(new MarketDataEntity("Aluminium", "AL", 700, true));
+			newMarketData.add(new MarketDataEntity("Adamantium", "AD", 500, true));
+			newMarketData.add(new MarketDataEntity("Uranium", "UR", 520, true));
+			newMarketData.add(new MarketDataEntity("Vibranium", "VB", 700, true));
 		}
 		for(MarketDataEntity m : newMarketData) {
 			marketDataRepo.save(m);
