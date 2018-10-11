@@ -32,7 +32,7 @@ public class TradingRESTController {
 	
 	ExecutorService tradeHandlingThreadPool = Executors.newFixedThreadPool(4);
 	
-	public static int TRADE_STATUS_TEST_DELAY = 10000;
+	public static int TRADE_STATUS_TEST_DELAY = 600000;
 
 
 	/*******************************METHODS***********************************/
@@ -53,7 +53,7 @@ public class TradingRESTController {
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
-				newTrade.setStatus(TradeStatus.NOMINATED);
+				newTrade.setStatus(TradeStatus.CLOSED);
 				tradingRepo.save(newTrade);
 			}
 			
